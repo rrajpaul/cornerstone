@@ -13,6 +13,7 @@ export default class Category extends CatalogPage {
             this.onSortBySubmit = this.onSortBySubmit.bind(this);
             hooks.on('sortBy-submitted', this.onSortBySubmit);
         }
+        this.getAdd3ToCart();
     }
 
     initFacetedSearch() {
@@ -44,6 +45,48 @@ export default class Category extends CatalogPage {
             $('html, body').animate({
                 scrollTop: 0,
             }, 100);
+        });
+    }
+
+    getAdd3ToCart() { 
+        $("button#add3ToCart").click(function() {
+
+                var cartItems = {"lineItems": [
+                    {
+                        "quantity": 1,
+                        "productId": 93,
+                        "variantId": 52
+                    },
+                    {
+                        "quantity": 1,
+                        "productId": 86
+                    },
+                    {
+                        "quantity": 1,
+                        "productId": 103
+                    }
+                ]};
+                
+                let url = `/api/storefront/carts`;
+    
+                fetch(url, {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(cartItems),
+                })
+                .then(response => response.json());
+    
+                url = `/api/storefront/carts?include=lineItems.physicalItems.options`;
+    
+                fetch(url, {
+                    method: "GET",
+                    credentials: "same-origin"
+                })
+                .then(response => response.json());
+
         });
     }
 }

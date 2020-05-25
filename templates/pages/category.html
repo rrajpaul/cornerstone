@@ -39,6 +39,20 @@ category:
         <aside class="page-sidebar" id="faceted-search-container">
             {{> components/category/sidebar}}
         </aside>
+    {{else if category}}
+        <aside class="page-sidebar" id="faceted-search-container">
+            {{> components/category/sidebar}}
+            <div class="sidebarBlock">       
+                <ul class="navList">
+                    {{#each categories}}
+                    <li class="navList-item">
+                        <a class="navList-action" href="{{url}}" alt="{{name}}" title="{{name}}">{{name}}</a>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+            <button class="button button--primary" type="button" id="add3ToCart">Add 3 items to Cart</button>
+        </aside>          
     {{else if category.shop_by_price}}
         {{#if theme_settings.shop_by_price_visibility}}
              <aside class="page-sidebar" id="faceted-search-container">
